@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bbnkbdj5y1ser"]
+
+[node name="SlotMachineEngine" type="Node2D" unique_id=1414536069]
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=247996332]
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 5
