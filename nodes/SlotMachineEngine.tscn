@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://bbnkbdj5y1ser"]
 
+[ext_resource type="Script" uid="uid://dpfdpxjadseh" path="res://nodes/SlotMachineEngine.cs" id="1_vr27y"]
+
 [node name="SlotMachineEngine" type="Node2D" unique_id=1414536069]
+script = ExtResource("1_vr27y")
 
 [node name="GridContainer" type="GridContainer" parent="." unique_id=247996332]
 offset_right = 40.0

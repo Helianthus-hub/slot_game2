@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Symbol
+public abstract class Symbol
 {
-
+String ImagePath = "res://sprites/sprite.png";
 }
