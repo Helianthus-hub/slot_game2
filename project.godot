@@ -12,7 +12,7 @@ config_version=5
 
 config/name="slot_Game_2"
 run/main_scene="uid://bbnkbdj5y1ser"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]

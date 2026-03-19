@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://bbnkbdj5y1ser"]
-
-[ext_resource type="Script" uid="uid://bjikml2vm7n6p" path="res://noders/SpriteM.cs" id="1_8mxeb"]
-
-[node name="Node2D" type="Node2D" unique_id=1414536069]
-script = ExtResource("1_8mxeb")

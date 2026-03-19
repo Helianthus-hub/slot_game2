@@ -6,16 +6,16 @@ public partial class SpriteM : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		for (int i = 0; i <= 5; i++)
+		for (int i = 0; i < 5; i++)
 		{
-		   for (int j = 0; j <= 5; j++)
+		   for (int j = 0; j < 5; j++)
 			{
 				String path = "res://sprites/sprite.png";
 				Sprite2D mySprite = new Sprite2D();
 				Texture2D myTexture = GD.Load<Texture2D>(path);
 				mySprite.Texture = myTexture;
 				AddChild(mySprite);
-				mySprite.Position = new Vector2(100*i, 200*j);
+				mySprite.Position = new Vector2(100*(i+1), 100*(j+1));
 				mySprite.Scale = new Vector2(0.5f, 0.5f);
 			}
 		}

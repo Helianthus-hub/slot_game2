@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://bbnkbdj5y1ser"]
 
-[ext_resource type="Script" uid="uid://bjikml2vm7n6p" path="res://noders/SpriteM.cs" id="1_8mxeb"]
+[ext_resource type="Script" uid="uid://dpfdpxjadseh" path="res://nodes/SpriteM.cs" id="1_17her"]
 
 [node name="Node2D" type="Node2D" unique_id=1414536069]
-script = ExtResource("1_8mxeb")
+script = ExtResource("1_17her")
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=247996332]
+offset_right = 40.0
+offset_bottom = 40.0
