@@ -4,7 +4,7 @@ using System;
 public partial class SlotMachineEngine : Node2D
 {
 	private TextureRect[] GridSlots = new TextureRect[25];
-	private Symbol[] symbols = new Symbol[25];
+	private Symbol[] Symbols = new Symbol[25];
 	
 	
 	[Export] private GridContainer Grid;
@@ -25,12 +25,17 @@ public partial class SlotMachineEngine : Node2D
 				//textureRect2.Texture = GD.Load<Texture2D>(he.ImagePath);
 				//GridSlots[1] = textureRect2;
 				for(int i = 0; i < 25; i++){
-					var textureRect = new TextureRect();
-					textureRect.Texture = GD.Load<Texture2D>(he.ImagePath);
-					GridSlots[i] = textureRect;
+					if(i % 2 == 0){
+					Heart heart = new Heart();
+					Symbols[i] = heart;
+					}
+					else{
+						Clover clover = new Clover();
+						Symbols[i] = clover;
+					}
 				}
-				BuildGrid(GridSlots);
-				
+				BuildGrid();
+				UpdateGrid(0, cl);
 				
 				
 				
@@ -48,9 +53,22 @@ public partial class SlotMachineEngine : Node2D
 		foreach (Node child in Grid.GetChildren()){
 		child.Free();}
 	}
-	public void BuildGrid(params TextureRect[] textures){
-		foreach(var texture in textures){
+	public void BuildGrid(){
+	
+		for(int i = 0; i < 25; i++){
+			var textureRect = new TextureRect();
+			textureRect.Texture = GD.Load<Texture2D>(Symbols[i].ImagePath);
+			GridSlots[i] = textureRect;
+			}
+		
+		
+		
+		foreach(var texture in GridSlots){
 			Grid.AddChild(texture);
 		}
+	}
+	public void UpdateGrid(int index, Symbol symbol){
+		
+		GridSlots[index].Texture = GD.Load<Texture2D>(symbol.ImagePath);
 	}
 }
