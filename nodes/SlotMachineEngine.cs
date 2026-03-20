@@ -66,9 +66,9 @@ public partial class SlotMachineEngine : Node2D
 			//};
 	public void InitializeGrid(){
 		Grid.Columns = 5;
-		//foreach(Node child in Grid.GetChildren()){
-			//child.Free();//istrina is atminties kad duplicates nebutu
-		//}
+		foreach(Node child in Grid.GetChildren()){
+			child.Free();//istrina is atminties kad duplicates nebutu
+		}
 		//Random rng = new Random();
 		//for(int row = 0; row < 5; row++){
 			//for(int col = 0; col < 5; col++){
@@ -143,6 +143,9 @@ public partial class SlotMachineEngine : Node2D
 	}
 	
 	public void BuildGrid(){
+		foreach(Node child in Grid.GetChildren()){
+			child.Free();//istrina is atminties kad duplicates nebutu
+		}
 		for(int row = 0; row < 5; row++){
 			for(int col = 0; col < 5; col++){
 				var textureRect = new TextureRect();
