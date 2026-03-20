@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public abstract class Symbol
+public abstract partial class Symbol : Node
 {
-String ImagePath = "res://sprites/sprite.png";
+	public abstract string ImagePath { get; }
 }
