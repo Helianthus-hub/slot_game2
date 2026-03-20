@@ -30,8 +30,14 @@ public partial class SlotMachineEngine : Node2D
 					Symbols[i] = heart;
 					}
 					else{
+						if(i % 3 == 0){
 						Clover clover = new Clover();
 						Symbols[i] = clover;
+						}
+						else{
+							Ankh ankh = new Ankh();
+							Symbols[i] = ankh;
+						}
 					}
 				}
 				BuildGrid();
