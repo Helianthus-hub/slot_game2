@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 public partial class SlotMachineEngine : Node2D
 {
@@ -10,16 +11,8 @@ public partial class SlotMachineEngine : Node2D
 	
 	[Export] private GridContainer Grid;
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-			InitializeGrid();
-			RandomizeSymbols();
-			BuildGrid();
-			GD.Print("hello");
-			CalculateThreeOfAKind();
-			Clover clov = new Clover();
-			UpdateGrid(0,0,clov);
-		
+	public override void _Ready(){
+		Spin();
 	}
 	
 	//Pabandysiu padarti kad random simbolius sudetu i grida
@@ -33,22 +26,6 @@ public partial class SlotMachineEngine : Node2D
 			//};
 	public void InitializeGrid(){
 		Grid.Columns = GameConfig.GridColumns;
-		foreach(Node child in Grid.GetChildren()){
-			child.Free();//istrina is atminties kad duplicates nebutu
-		}
-		//Random rng = new Random();
-		//for(int row = 0; row < 5; row++){
-			//for(int col = 0; col < 5; col++){
-				//int randomPick = rng.Next(0, SymbolPaths.Count);
-				//Symbols[row, col] = randomPick switch {
-					//0 => new Heart(),
-					//1 => new Clover(),
-					//2 => new Ankh(),
-					//3 => new Pentagram(),
-					//_ => new Heart()
-				//};
-			//}
-		//}
 	}
 	public void RandomizeSymbols(){
 		//reiktu exclusicity implement (Symbol.InDeck)
@@ -87,8 +64,8 @@ public partial class SlotMachineEngine : Node2D
 	}
 	}
 	//Cia bus pagrindine logika kaip skaiciuojami laimejimai veliau bus kiti skirtingi laimejimo variantai dabar noriu padaryti 3 of a kind
-	//kinda works tik reik pagalvot kaip antra for loop padaryti kad nebutu out of
-	//bounds exception, dabar tikrina 3 simbolius is eiles bet reikia kad butu 5 simboliai
+	//kinda works tik reiks diagonal skaiciavima prideti ir kad neskaiciuotu tu paciu simboliu 3 kartus jei yra 4 of a kind ar 5 of a kind
+	//
 	public int CalculateThreeOfAKind(){
 		int payout = 0;
 		for(int row = 0; row < 5; row++){
@@ -96,20 +73,22 @@ public partial class SlotMachineEngine : Node2D
 				Symbol a = Symbols[row, col];
 				Symbol b = Symbols[row, col +1];
 				Symbol c = Symbols[row, col +2];
-				if(a.GetType() == b.GetType() && b.GetType() == c.GetType()){
+				if(a.Type == b.Type && b.Type == c.Type){
 					payout += GameConfig.ThreeOfAKindPayout;
 				}
 			}
 		}
-		GD.Print("Three of a kind payout: " + payout);
 		return payout;
 	}
 	public int CalculateSpinResult(){
-		
-		return 0;
+		int payout= 0;
+		payout+= CalculateThreeOfAKind();
+		GD.Print("Spin Result: " + payout);
+		return payout;
 	}
 	
 	public void BuildGrid(){
+		Grid.Columns = GameConfig.GridColumns;
 		foreach(Node child in Grid.GetChildren()){
 			child.Free();//istrina is atminties kad duplicates nebutu
 		}
@@ -125,5 +104,10 @@ public partial class SlotMachineEngine : Node2D
 	
 	public void UpdateGrid(int row, int col, Symbol symbol){
 		GridSlots[row, col].Texture = GD.Load<Texture2D>(symbol.ImagePath);
+	}
+	public void Spin(){
+		RandomizeSymbols();
+		BuildGrid();
+		CalculateSpinResult();
 	}
 }

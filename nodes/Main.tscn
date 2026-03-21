@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bbnkbdj5y1ser"]
+
+[ext_resource type="Script" uid="uid://dpfdpxjadseh" path="res://nodes/SlotMachineEngine.cs" id="1_xivh3"]
+[ext_resource type="Script" uid="uid://svxmcvmcayn4" path="res://nodes/UI.cs" id="2_ldt21"]
+
+[node name="Main" type="Node2D" unique_id=1414536069]
+
+[node name="SlotMachineEngine" type="Node2D" parent="." unique_id=465602389 node_paths=PackedStringArray("Grid")]
+script = ExtResource("1_xivh3")
+Grid = NodePath("GridContainer")
+
+[node name="GridContainer" type="GridContainer" parent="SlotMachineEngine" unique_id=247996332]
+offset_left = 2.0
+offset_right = 42.0
+offset_bottom = 40.0
+columns = 3
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1374389175 node_paths=PackedStringArray("SpinButton", "Engine")]
+script = ExtResource("2_ldt21")
+SpinButton = NodePath("SpinButton")
+Engine = NodePath("../SlotMachineEngine")
+
+[node name="SpinButton" type="Button" parent="UI" unique_id=413619395]
+offset_left = 400.0
+offset_top = 121.0
+offset_right = 445.0
+offset_bottom = 152.0
+text = "SPIN"
