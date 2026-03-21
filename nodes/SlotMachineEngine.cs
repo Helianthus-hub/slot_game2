@@ -19,39 +19,6 @@ public partial class SlotMachineEngine : Node2D
 			CalculateThreeOfAKind();
 			Clover clov = new Clover();
 			UpdateGrid(0,0,clov);
-					//Sprite2D mySprite = new Sprite2D();
-					/*over cl = new Clover();
-					Heart he = new Heart();
-					Texture2D myTexture = GD.Load<Texture2D>(cl.ImagePath);
-					mySprite.Texture = myTexture;
-					//var textureRect = new TextureRect();
-					//textureRect.Texture = GD.Load<Texture2D>(cl.ImagePath);
-					//var textureRect2 = new TextureRect();
-					//Grid.AddChild(textureRect);
-					//GridSlots[0] = textureRect;
-					//textureRect2.Texture = GD.Load<Texture2D>(he.ImagePath);
-					//GridSlots[1] = textureRect2;
-					for(int i = 0; i < 25; i++){
-						if(i % 2 == 0){
-						Heart heart = new Heart();
-						Symbols[i] = heart;
-						}
-						else{
-							if(i % 3 == 0){
-							Clover clover = new Clover();
-							Symbols[i] = clover;
-							}
-							else{
-								Ankh ankh = new Ankh();
-								Symbols[i] = ankh;
-							}
-						}
-					}*/
-					
-				//}
-			//}
-
-		
 		
 	}
 	
