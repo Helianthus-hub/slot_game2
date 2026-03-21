@@ -65,7 +65,7 @@ public partial class SlotMachineEngine : Node2D
 				//{3, "res://sprites/pentagram.png"},
 			//};
 	public void InitializeGrid(){
-		Grid.Columns = 5;
+		Grid.Columns = GameConfig.GridColumns;
 		foreach(Node child in Grid.GetChildren()){
 			child.Free();//istrina is atminties kad duplicates nebutu
 		}
