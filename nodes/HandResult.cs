@@ -1,15 +1,15 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
-public partial class HandResult : Node
-{
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+public class HandResult {
+	public HandType Type;
+	public int Payout;
+	public List<Vector2I> Cells;
+	
+	public HandResult(HandType Type, int Payout,  List<Vector2I> Cells){
+		this.Type = Type;
+		this.Payout =  Payout;
+		this.Cells = Cells;
 	}
 }

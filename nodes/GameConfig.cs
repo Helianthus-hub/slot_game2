@@ -11,6 +11,6 @@ public static readonly int StartingHeartAmount = 10;
 
 //Hand payouts    
 public static readonly int ThreeOfAKindPayout = 100;
-public static readonly int FourOfAKindPayout = 0;
-public static readonly int FiveOfAKindPayout = 0;
+public static readonly int FourOfAKindPayout = 200;
+public static readonly int FiveOfAKindPayout = 300;
 }
