@@ -57,27 +57,6 @@ public partial class SlotMachineEngine : Node2D
 	//Cia bus pagrindine logika kaip skaiciuojami laimejimai veliau bus kiti skirtingi laimejimo variantai dabar noriu padaryti 3 of a kind
 	//kinda works tik reiks diagonal skaiciavima prideti ir kad neskaiciuotu tu paciu simboliu 3 kartus jei yra 4 of a kind ar 5 of a kind
 	//
-	public int CalculateThreeOfAKind(){
-		//Fix bug
-		int payout = 0;
-		for(int row = 0; row < 5; row++){
-			for(int col = 0; col <= 2; col++){
-				Symbol a = Symbols[row, col];
-				Symbol b = Symbols[row, col +1];
-				Symbol c = Symbols[row, col +2];
-				if(a.Type == b.Type && b.Type == c.Type){
-					payout += GameConfig.ThreeOfAKindPayout;
-				}
-			}
-		}
-		return payout;
-	}
-	public int CalculateSpinResult(){
-		int payout= 0;
-		payout+= CalculateThreeOfAKind();
-		GD.Print("Spin Result: " + payout);
-		return payout;
-	}
 	
 	public void BuildGrid(){
 		Grid.Columns = GameConfig.GridColumns;
@@ -98,8 +77,24 @@ public partial class SlotMachineEngine : Node2D
 		GridSlots[row, col].Texture = GD.Load<Texture2D>(symbol.ImagePath);
 	}
 	public void Spin(){
-		RandomizeSymbols();
-		BuildGrid();
-		CalculateSpinResult();
-	}
+        RandomizeSymbols();
+        BuildGrid();
+ 
+        List<HandResult> hands = PayoutCalculator.Evaluate(Symbols);
+        int totalPayout = ApplyResults(hands);
+ 
+        GD.Print($"Total payout: {totalPayout}");
+    }
+ 
+    // Sums payout and prints every matched hand.
+    private int ApplyResults(List<HandResult> hands)
+    {
+        int total = 0;
+        foreach (HandResult hand in hands)
+        {
+            total += hand.Payout;
+            GD.Print($"{hand.Type} +{hand.Payout}  cells: {string.Join(", ", hand.Cells)}");
+        }
+        return total;
+    }
 }

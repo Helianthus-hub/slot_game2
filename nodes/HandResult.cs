@@ -6,6 +6,7 @@ public class HandResult {
 	public HandType Type;
 	public int Payout;
 	public List<Vector2I> Cells;
+	public List<Symbol> MatchedSymbols;
 	
 	public HandResult(HandType Type, int Payout,  List<Vector2I> Cells){
 		this.Type = Type;
