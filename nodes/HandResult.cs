@@ -8,9 +8,10 @@ public class HandResult {
 	public List<Vector2I> Cells;
 	public List<Symbol> MatchedSymbols;
 	
-	public HandResult(HandType Type, int Payout,  List<Vector2I> Cells){
+	public HandResult(HandType Type, int Payout,  List<Vector2I> Cells, List<Symbol> MatchedSymbols){
 		this.Type = Type;
 		this.Payout =  Payout;
 		this.Cells = Cells;
+		this.MatchedSymbols = MatchedSymbols;
 	}
 }

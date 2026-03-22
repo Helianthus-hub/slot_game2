@@ -28,15 +28,17 @@ public static class PayoutCalculator {
 				}
 				if(MatchLength >= 3){
 					var cells = new List<Vector2I>();
+					var MatchedSymbols = new List<Symbol>();
 					for(int i = 0; i < MatchLength; i++){
 						cells.Add(new Vector2I(row, col + i));
+						MatchedSymbols.Add(Symbols[row, col + i]);
 					}
 					(HandType type , int payout) = MatchLength switch {
 						5 => (HandType.HorizontalFive, GameConfig.FiveOfAKindPayout),
 						4 => (HandType.HorizontalFour,GameConfig.FourOfAKindPayout),
 						_ => (HandType.HorizontalThree, GameConfig.ThreeOfAKindPayout),
 					}; 
-					results.Add(new HandResult(type, payout, cells));
+					results.Add(new HandResult(type, payout, cells, MatchedSymbols));
 				}
 				col += MatchLength;
 			}
@@ -58,14 +60,16 @@ public static class PayoutCalculator {
 		SymbolType type = Symbols[1, 1].Type;
 		if(MatchLength == 5 && type == Symbols[2, 2].Type && type == Symbols[0, 4].Type){
 			var cells = new List<Vector2I>();
+			var MatchedSymbols = new List<Symbol>();
 			for(int i = 0; i < 5; i++){
 				cells.Add(new Vector2I(0, i));
+				MatchedSymbols.Add(Symbols[0, i]);
 			}
 			cells.Add(new Vector2I(1, 1));
 			cells.Add(new Vector2I(2, 2));
 			cells.Add(new Vector2I(1, 3));
 
-			results.Add(new HandResult(HandType.PyramidUpper, GameConfig.PyramidPayout,  cells));
+			results.Add(new HandResult(HandType.PyramidUpper, GameConfig.PyramidPayout,  cells, MatchedSymbols));
 		}
 		//CheckingLowerPyramid structure
 		while(col < 4 && Symbols[4, col].Type == Symbols[4, col + 1].Type){
@@ -75,14 +79,16 @@ public static class PayoutCalculator {
 		SymbolType type2 = Symbols[3, 1].Type;
 		if(MatchLength == 5 && type2 == Symbols[2, 2].Type && type2 == Symbols[3, 3].Type){
 			var cells = new List<Vector2I>();
+			var MatchedSymbols = new List<Symbol>();
 			for(int i = 0; i < 5; i++){
 				cells.Add(new Vector2I(0, i));
+				MatchedSymbols.Add(Symbols[0, i]);
 			}
 			cells.Add(new Vector2I(3, 1));
 			cells.Add(new Vector2I(2, 2));
 			cells.Add(new Vector2I(3, 3));
 
-			results.Add(new HandResult(HandType.PyramidLower, GameConfig.PyramidPayout,  cells));
+			results.Add(new HandResult(HandType.PyramidLower, GameConfig.PyramidPayout,  cells, MatchedSymbols));
 		}
 		return results;
 	}

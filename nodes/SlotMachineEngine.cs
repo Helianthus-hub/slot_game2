@@ -28,7 +28,7 @@ public partial class SlotMachineEngine : Node2D
 				{3, "res://sprites/pentagram.png"},
 			};
 			
-			Random rng = new Random();
+		Random rng = new Random();
 		for(int row = 0; row < 5; row++){
 			for(int col = 0; col < 5; col++){
 				
@@ -45,6 +45,7 @@ public partial class SlotMachineEngine : Node2D
 		}
 		
 	}
+	
 	// Called every frame. 'delta' is the elapsed time sincse the previous frame.
 	public override void _Process(double delta){}
 	
