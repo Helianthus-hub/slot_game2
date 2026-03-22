@@ -23,6 +23,6 @@ Engine = NodePath("../SlotMachineEngine")
 [node name="SpinButton" type="Button" parent="UI" unique_id=413619395]
 offset_left = 400.0
 offset_top = 121.0
-offset_right = 445.0
-offset_bottom = 152.0
+offset_right = 480.0
+offset_bottom = 174.0
 text = "SPIN"

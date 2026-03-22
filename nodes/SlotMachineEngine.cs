@@ -15,15 +15,6 @@ public partial class SlotMachineEngine : Node2D
 		Spin();
 	}
 	
-	//Pabandysiu padarti kad random simbolius sudetu i grida
-	//Saugom elementus mape su ju paths to sprite
-	//Dictionary<int, string> SymbolPaths = new Dictionary<int, string>() 
-			//{
-				//{0, "res://sprites/heart.png"},
-				//{1, "res://sprites/clover.png"},
-				//{2, "res://sprites/ankh.png"},
-				//{3, "res://sprites/pentagram.png"},
-			//};
 	public void InitializeGrid(){
 		Grid.Columns = GameConfig.GridColumns;
 	}
