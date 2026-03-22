@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 public partial class SlotMachineEngine : Node2D
 {
@@ -10,6 +9,7 @@ public partial class SlotMachineEngine : Node2D
 	
 	
 	[Export] private GridContainer Grid;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready(){
 		Spin();
@@ -46,17 +46,7 @@ public partial class SlotMachineEngine : Node2D
 		
 	}
 	// Called every frame. 'delta' is the elapsed time sincse the previous frame.
-	public override void _Process(double delta)
-	{
-		 if (Input.IsKeyPressed(Key.A))
-	{
-		RandomizeSymbols();
-		BuildGrid();
-	}
-	}
-	//Cia bus pagrindine logika kaip skaiciuojami laimejimai veliau bus kiti skirtingi laimejimo variantai dabar noriu padaryti 3 of a kind
-	//kinda works tik reiks diagonal skaiciavima prideti ir kad neskaiciuotu tu paciu simboliu 3 kartus jei yra 4 of a kind ar 5 of a kind
-	//
+	public override void _Process(double delta){}
 	
 	public void BuildGrid(){
 		Grid.Columns = GameConfig.GridColumns;
