@@ -6,4 +6,3 @@ public enum SymbolType{
 	Ankh,
 	Pentagram
 }
-

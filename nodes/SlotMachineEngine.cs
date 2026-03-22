@@ -58,6 +58,7 @@ public partial class SlotMachineEngine : Node2D
 	//kinda works tik reiks diagonal skaiciavima prideti ir kad neskaiciuotu tu paciu simboliu 3 kartus jei yra 4 of a kind ar 5 of a kind
 	//
 	public int CalculateThreeOfAKind(){
+		//Fix bug
 		int payout = 0;
 		for(int row = 0; row < 5; row++){
 			for(int col = 0; col <= 2; col++){
