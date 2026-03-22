@@ -9,5 +9,5 @@ public abstract partial class Symbol : Node
 	public bool InDeck = false;
 	public float Multi = 1.0f;
 	public int BaseChips = 1;
-	public List<string> Tags = new();//Example: Cursed, Lucky etc basically modifiers
+	public List<string> Modifiers = new();//Example: Cursed, Lucky etc basically modifiers
 }

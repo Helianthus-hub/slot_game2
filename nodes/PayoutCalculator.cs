@@ -51,7 +51,7 @@ public static class PayoutCalculator {
 		int MatchLength = 1;
 		int col = 0;
 		//Checking UpperPyramid structure
-		while(col < 5 && Symbols[0, col].Type == Symbols[0, col + 1].Type){
+		while(col < 4 && Symbols[0, col].Type == Symbols[0, col + 1].Type){
 			MatchLength++;
 			col++;
 		}
@@ -68,7 +68,7 @@ public static class PayoutCalculator {
 			results.Add(new HandResult(HandType.PyramidUpper, GameConfig.PyramidPayout,  cells));
 		}
 		//CheckingLowerPyramid structure
-		while(col < 5 && Symbols[4, col].Type == Symbols[4, col + 1].Type){
+		while(col < 4 && Symbols[4, col].Type == Symbols[4, col + 1].Type){
 			MatchLength++;
 			col++;
 		}

@@ -72,7 +72,7 @@ public partial class SlotMachineEngine : Node2D
  
         List<HandResult> hands = PayoutCalculator.Evaluate(Symbols);
         int totalPayout = ApplyResults(hands);
- 
+		AnimateMatchedCells(hands);
         GD.Print($"Total payout: {totalPayout}");
     }
  
@@ -87,4 +87,16 @@ public partial class SlotMachineEngine : Node2D
         }
         return total;
     }
+
+	private void AnimateMatchedCells(List<HandResult> hands){
+    	foreach (HandResult hand in hands){
+        	foreach (Vector2I cell in hand.Cells){
+            TextureRect slot = GridSlots[cell.X, cell.Y];
+            Tween tween = CreateTween();
+            tween.SetLoops(3);
+            tween.TweenProperty(slot, "modulate", new Color(1.5f, 1.5f, 0.5f), 0.1f); // flash yellow
+            tween.TweenProperty(slot, "modulate", new Color(1, 1, 1), 0.1f);           // back to normal
+    		}
+   	   }
+	}
 }
