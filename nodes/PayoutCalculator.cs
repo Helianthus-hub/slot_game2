@@ -68,6 +68,9 @@ public static class PayoutCalculator {
 			cells.Add(new Vector2I(1, 1));
 			cells.Add(new Vector2I(2, 2));
 			cells.Add(new Vector2I(1, 3));
+			MatchedSymbols.Add(Symbols[1, 1]);
+			MatchedSymbols.Add(Symbols[2, 2]);
+			MatchedSymbols.Add(Symbols[1, 3]);
 
 			results.Add(new HandResult(HandType.PyramidUpper, GameConfig.PyramidPayout,  cells, MatchedSymbols));
 		}
@@ -87,8 +90,51 @@ public static class PayoutCalculator {
 			cells.Add(new Vector2I(3, 1));
 			cells.Add(new Vector2I(2, 2));
 			cells.Add(new Vector2I(3, 3));
+			MatchedSymbols.Add(Symbols[3, 1]);
+			MatchedSymbols.Add(Symbols[2, 2]);
+			MatchedSymbols.Add(Symbols[3, 3]);
 
 			results.Add(new HandResult(HandType.PyramidLower, GameConfig.PyramidPayout,  cells, MatchedSymbols));
+		}
+		return results;
+	}
+
+	// FullHouse
+	public static List<HandResult> EvaluateFullHouse(Symbol[,] Symbols){
+		var results = new List<HandResult>();
+		int MatchLength = 1;
+		int col = 0;
+		//Checking UpperPyramid structure
+		while(col < 4 && Symbols[0, col].Type == Symbols[0, col + 1].Type 
+		&& Symbols[4, col].Type == Symbols[4, col + 1].Type){
+			MatchLength++;
+			col++;
+		}
+		SymbolType type = Symbols[1, 1].Type;
+		if(MatchLength == 5 && type == Symbols[2, 2].Type && type == Symbols[0, 4].Type 
+		&& type == Symbols[2, 2].Type && type == Symbols[3, 3].Type){
+			var cells = new List<Vector2I>();
+			var MatchedSymbols = new List<Symbol>();
+			for(int i = 0; i < 5; i++){
+				cells.Add(new Vector2I(0, i));
+				MatchedSymbols.Add(Symbols[0, i]);
+			}
+			for(int i = 0; i < 5; i++){
+				cells.Add(new Vector2I(4, i));
+				MatchedSymbols.Add(Symbols[4, i]);
+			}
+			cells.Add(new Vector2I(1, 1));
+			cells.Add(new Vector2I(2, 2));
+			cells.Add(new Vector2I(1, 3));
+			cells.Add(new Vector2I(3, 1));
+			cells.Add(new Vector2I(3, 3));
+			MatchedSymbols.Add(Symbols[1, 1]);
+			MatchedSymbols.Add(Symbols[2, 2]);
+			MatchedSymbols.Add(Symbols[1, 3]);
+			MatchedSymbols.Add(Symbols[3, 1]);
+			MatchedSymbols.Add(Symbols[3, 3]);
+
+			results.Add(new HandResult(HandType.FullHouse, GameConfig.FullHousePayout,  cells, MatchedSymbols));
 		}
 		return results;
 	}

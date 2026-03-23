@@ -14,4 +14,5 @@ public static readonly int ThreeOfAKindPayout = 100;
 public static readonly int FourOfAKindPayout = 200;
 public static readonly int FiveOfAKindPayout = 300;
 public static readonly int PyramidPayout = 500;
+public static readonly int FullHousePayout = 1000;
 }
