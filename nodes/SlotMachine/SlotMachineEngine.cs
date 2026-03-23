@@ -8,6 +8,7 @@ public partial class SlotMachineEngine : Node2D
 	private Symbol[,] Symbols = new Symbol[5, 5];
 	
 	
+	
 	[Export] private GridContainer Grid;
 
 	// Called when the node enters the scene tree for the first time.
