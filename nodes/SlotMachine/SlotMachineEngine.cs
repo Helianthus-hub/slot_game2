@@ -77,6 +77,21 @@ public partial class SlotMachineEngine : Node2D
 		AnimateMatchedCells(hands);
         GD.Print($"Total payout: {totalPayout}");
     }
+
+private void ForceDiagonal()
+{
+    // Alternate fillers so no accidental runs form
+    for (int row = 0; row < 5; row++)
+        for (int col = 0; col < 5; col++)
+            Symbols[row, col] = (row + col) % 2 == 0 ? new Clover() : new Ankh();
+
+    // Main diagonal only
+    Symbols[0, 0] = new Heart();
+    Symbols[1, 1] = new Heart();
+    Symbols[2, 2] = new Heart();
+    Symbols[3, 3] = new Heart();
+    Symbols[4, 4] = new Heart();
+}
  
     // Sums payout and prints every matched hand.
     private int ApplyResults(List<HandResult> hands)
