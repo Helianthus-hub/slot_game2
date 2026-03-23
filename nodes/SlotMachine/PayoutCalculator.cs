@@ -177,7 +177,7 @@ public static class PayoutCalculator {
 			head = Symbols[headPos.Y,headPos.X];
 			nextPos = startPoint + LtoR;
 			next = Symbols[nextPos.Y ,nextPos.X];
-			while(next != null || (nextPos.Y < 5 && nextPos.X < 5))
+			while(nextPos.Y < 5 && nextPos.X < 5)
 			{
 				if(head.Type == next.Type)
 				{
@@ -212,6 +212,7 @@ public static class PayoutCalculator {
 				//Calculate Cells
 					var cells = new List<Vector2I>();
 					var MatchedSymbols = new List<Symbol>();
+					nextPos -= LtoR;
 					while(next != head)
 				{
 					cells.Add(new Vector2I(nextPos.Y,nextPos.X));
@@ -220,7 +221,7 @@ public static class PayoutCalculator {
 				}
 				//Calculate HandType
 					(HandType type, int payout) = MatchLength switch {
-					2 => (HandType.DiagonalFive, GameConfig.FiveOfAKindPayout),
+					4 => (HandType.DiagonalFive, GameConfig.FiveOfAKindPayout),
 					3 => (HandType.DiagonalFour, GameConfig.FourOfAKindPayout),
 					_ => (HandType.DiagonalThree, GameConfig.ThreeOfAKindPayout),
 				};
@@ -230,14 +231,14 @@ public static class PayoutCalculator {
 		
 	} 
 	//Cheking necessary top right to left diagonals 
-	foreach(var startPoint in StartPointsL)
+	foreach(var startPoint in StartPointsR)
 		{
 			int MatchLength = 0;
 			headPos = startPoint;
 			head = Symbols[headPos.Y,headPos.X];
 			nextPos = startPoint + RtoL;
 			next = Symbols[nextPos.Y ,nextPos.X];
-			while(next != null || (nextPos.Y < 5 && nextPos.X > -1))
+			while(nextPos.Y < 5 && nextPos.X > -1)
 			{
 				if(head.Type == next.Type)
 				{
@@ -272,6 +273,7 @@ public static class PayoutCalculator {
 				//Calculate Cells
 					var cells = new List<Vector2I>();
 					var MatchedSymbols = new List<Symbol>();
+					nextPos -= RtoL;
 					while(next != head)
 				{
 					cells.Add(new Vector2I(nextPos.Y,nextPos.X));
@@ -280,7 +282,7 @@ public static class PayoutCalculator {
 				}
 				//Calculate HandType
 					(HandType type, int payout) = MatchLength switch {
-					2 => (HandType.DiagonalFive, GameConfig.FiveOfAKindPayout),
+					4 => (HandType.DiagonalFive, GameConfig.FiveOfAKindPayout),
 					3 => (HandType.DiagonalFour, GameConfig.FourOfAKindPayout),
 					_ => (HandType.DiagonalThree, GameConfig.ThreeOfAKindPayout),
 				};
