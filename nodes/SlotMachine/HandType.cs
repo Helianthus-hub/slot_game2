@@ -8,13 +8,10 @@ public enum HandType{
     DiagonalThree,
     DiagonalFour,
     DiagonalFive,
-    Triangle,
     ZigzagThree,
     ZigzagFour,
     ZigzagFive,
 	PyramidLower,
 	PyramidUpper,
 	FullHouse,
-	StringLower,
-	StringUpper
 }

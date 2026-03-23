@@ -5,15 +5,12 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text.RegularExpressions;
 public static class PayoutCalculator {
     
-	
-	
-	// FullHouse
 	//ZigZag
-	//Triangle
 	public static List<HandResult> Evaluate(Symbol[,] Symbols){
         var results = new List<HandResult>();
 		results.AddRange(EvaluateHorizontal(Symbols));
 		results.AddRange(EvaluatePyramid(Symbols));
+		results.AddRange(EvaluateFullHouse(Symbols));
 		return results;
 	}
 	// Horizontal

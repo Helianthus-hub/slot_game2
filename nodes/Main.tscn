@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bbnkbdj5y1ser"]
 
-[ext_resource type="Script" uid="uid://dpfdpxjadseh" path="res://nodes/SlotMachineEngine.cs" id="1_xivh3"]
+[ext_resource type="Script" uid="uid://dpfdpxjadseh" path="res://nodes/SlotMachine/SlotMachineEngine.cs" id="1_xivh3"]
 [ext_resource type="Script" uid="uid://svxmcvmcayn4" path="res://nodes/UI.cs" id="2_ldt21"]
 
 [node name="Main" type="Node2D" unique_id=1414536069]
