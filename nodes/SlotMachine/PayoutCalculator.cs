@@ -14,6 +14,7 @@ public static class PayoutCalculator {
         var results = new List<HandResult>();
 		results.AddRange(EvaluateHorizontal(Symbols));
 		results.AddRange(EvaluatePyramid(Symbols));
+		results.AddRange(EvaluateDiagonal(Symbols));
 		return results;
 	}
 	// Horizontal
@@ -174,16 +175,26 @@ public static class PayoutCalculator {
 		{
 			int MatchLength = 0;
 			headPos = startPoint;
-			head = Symbols[headPos.Y,headPos.X];
+			head = Symbols[headPos.X, headPos.Y];
 			nextPos = startPoint + LtoR;
-			next = Symbols[nextPos.Y ,nextPos.X];
-			while(nextPos.Y < 5 && nextPos.X < 5)
+			next = Symbols[nextPos.X ,nextPos.Y];
+			
+			while(nextPos.X < 5 || nextPos.Y < 5)
 			{
+				GD.Print($"Comparing {head.Type} at {headPos} with {next.Type} at , where nextPos is {nextPos} with y {nextPos.Y} and x {nextPos.X}");	
+			
 				if(head.Type == next.Type)
 				{
-					next = Symbols[nextPos.Y, nextPos.X];
+					
+					if(nextPos.X == 4 || nextPos.Y == 4)
+					{
+						MatchLength++;
+						break;
+					}
 					nextPos += LtoR;
+					next = Symbols[nextPos.X, nextPos.Y];
 					MatchLength++;
+				
 				}
 				else if(MatchLength == 1)
 				{
@@ -198,24 +209,29 @@ public static class PayoutCalculator {
 					headPos += LtoR;
 					//break contingency covered by the 2nd else statement 
 					nextPos = headPos + LtoR;
-					if(nextPos.Y < 5 && nextPos.X < 5)
+					if(nextPos.X < 5 && nextPos.Y < 5)
 					{
-						head = Symbols[headPos.Y, headPos.X];
-						next = Symbols[nextPos.Y, nextPos.X];
+						head = Symbols[headPos.X, headPos.Y];
+						next = Symbols[nextPos.X, nextPos.Y];
 						
 					}
 					else break;
 				}
+				
+				
 			}
+			
 			if(MatchLength > 1)
 			{
+				
 				//Calculate Cells
 					var cells = new List<Vector2I>();
 					var MatchedSymbols = new List<Symbol>();
 					nextPos -= LtoR;
-					while(next != head)
+					while(MatchLength-- >= 0)
 				{
-					cells.Add(new Vector2I(nextPos.Y,nextPos.X));
+					
+					cells.Add(new Vector2I(nextPos.X,nextPos.Y));
 					MatchedSymbols.Add(next);
 					nextPos -= LtoR;
 				}
@@ -231,64 +247,66 @@ public static class PayoutCalculator {
 		
 	} 
 	//Cheking necessary top right to left diagonals 
-	foreach(var startPoint in StartPointsR)
-		{
-			int MatchLength = 0;
-			headPos = startPoint;
-			head = Symbols[headPos.Y,headPos.X];
-			nextPos = startPoint + RtoL;
-			next = Symbols[nextPos.Y ,nextPos.X];
-			while(nextPos.Y < 5 && nextPos.X > -1)
-			{
-				if(head.Type == next.Type)
-				{
-					next = Symbols[nextPos.Y, nextPos.X];
-					nextPos += RtoL;
-					MatchLength++;
-				}
-				else if(MatchLength == 1)
-				{
-					MatchLength = 0;
-				}
-				else if (MatchLength > 1)
-				{
-					break;
-				}
-				else
-				{
-					headPos += RtoL;
-					//break contingency covered by the 2nd else statement 
-					nextPos = headPos + RtoL;
-					if(nextPos.Y < 5 && nextPos.X > -1)
-					{
-						head = Symbols[headPos.Y, headPos.X];
-						next = Symbols[nextPos.Y, nextPos.X];
+	// foreach(var startPoint in StartPointsR)
+	// 	{
+	// 		int MatchLength = 0;
+	// 		headPos = startPoint;
+	// 		head = Symbols[headPos.X,headPos.Y];
+	// 		nextPos = startPoint + RtoL;
+	// 		next = Symbols[nextPos.X ,nextPos.Y];
+	// 		while(nextPos.X < 5 && nextPos.Y > -1)
+	// 		{
+	// 			if(head.Type == next.Type)
+	// 			{
+	// 				nextPos += RtoL;
+	// 				next = Symbols[nextPos.X, nextPos.Y];
+	// 				MatchLength++;
+	// 			}
+	// 			else if(MatchLength == 1)
+	// 			{
+	// 				MatchLength = 0;
+	// 			}
+	// 			else if (MatchLength > 1)
+	// 			{
+	// 				break;
+	// 			}
+	// 			else
+	// 			{
+					
+	// 				headPos += RtoL;
+	// 				//break contingency covered by the 2nd else statement 
+	// 				nextPos = headPos + RtoL;
+					
+	// 				if(nextPos.X < 5 && nextPos.Y > -1)
+	// 				{
+	// 					head = Symbols[headPos.X, headPos.Y];
+	// 					next = Symbols[nextPos.X, nextPos.Y];
 						
-					}
-					else break;
-				}
-			}
-			if(MatchLength > 1)
-			{
-				//Calculate Cells
-					var cells = new List<Vector2I>();
-					var MatchedSymbols = new List<Symbol>();
-					nextPos -= RtoL;
-					while(next != head)
-				{
-					cells.Add(new Vector2I(nextPos.Y,nextPos.X));
-					MatchedSymbols.Add(next);
-					nextPos -= RtoL;
-				}
-				//Calculate HandType
-					(HandType type, int payout) = MatchLength switch {
-					4 => (HandType.DiagonalFive, GameConfig.FiveOfAKindPayout),
-					3 => (HandType.DiagonalFour, GameConfig.FourOfAKindPayout),
-					_ => (HandType.DiagonalThree, GameConfig.ThreeOfAKindPayout),
-				};
-				results.Add(new HandResult(type, payout, cells, MatchedSymbols));
-			}
-		}
+	// 				}
+	// 				else break;
+	// 			}
+	// 		}
+	// 		if(MatchLength > 1)
+	// 		{
+	// 			//Calculate Cells
+	// 				var cells = new List<Vector2I>();
+	// 				var MatchedSymbols = new List<Symbol>();
+	// 				nextPos -= RtoL;
+	// 				while(MatchLength-- >= 0)
+	// 			{
+	// 				cells.Add(new Vector2I(nextPos.X,nextPos.Y));
+	// 				MatchedSymbols.Add(next);
+	// 				nextPos -= RtoL;
+	// 			}
+	// 			//Calculate HandType
+	// 				(HandType type, int payout) = MatchLength switch {
+	// 				4 => (HandType.DiagonalFive, GameConfig.FiveOfAKindPayout),
+	// 				3 => (HandType.DiagonalFour, GameConfig.FourOfAKindPayout),
+	// 				_ => (HandType.DiagonalThree, GameConfig.ThreeOfAKindPayout),
+	// 			};
+	// 			results.Add(new HandResult(type, payout, cells, MatchedSymbols));
+	// 		}
+	// 	}
 		return results;
 	}
 }
