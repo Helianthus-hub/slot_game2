@@ -1,0 +1,6 @@
+First priority: Implement ZigZag counting algorithm
+Second Priority: Implement Symbol pool kuriame simboliai ant grido butu imami
+ is listo/Array kad galetum isimti prideti simboliu etc.
+Third Priority: Implement a Weighted Symbol Pool kuriame butu galima padidinti probabilities tam tikru
+ simboliu appearing something like: P(Symbol appearing)= (SymbolInDeck.Count)/(AllSymbolsInDeck.Count) ir butu
+galima padidinti SymbolInDeck.Count += SymbolX.Weight
