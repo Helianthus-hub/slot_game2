@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -331,4 +329,3 @@ public static class PayoutCalculator {
 	}
 }
 
->>>>>>> f21a98fa152abf67c13b0f183c2632a73fffbe14

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public partial class SlotMachineEngine : Node2D
 {
@@ -78,24 +79,40 @@ public partial class SlotMachineEngine : Node2D
         GD.Print($"Total payout: {totalPayout}");
     }
 
-private void ForceDiagonal()
-{
-    // Alternate fillers so no accidental runs form
-    for (int row = 0; row < 5; row++)
-        for (int col = 0; col < 5; col++)
-            Symbols[row, col] = (row + col) % 2 == 0 ? new Clover() : new Ankh();
+	private Symbol[] BuildSymbolPool(){
+    var pool = new List<Symbol>();
+    for (int i = 0; i < GameConfig.StartingPentagramAmount; i++)
+        pool.Add(new Pentagram());
+    for (int i = 0; i < GameConfig.StartingAnkhAmount; i++)
+        pool.Add(new Ankh());
+    for (int i = 0; i < GameConfig.StartingCloverAmount; i++)
+        pool.Add(new Clover());
+    for (int i = 0; i < GameConfig.StartingHeartAmount; i++)
+        pool.Add(new Heart());
 
-    // Main diagonal only
-    Symbols[0, 0] = new Heart();
-    Symbols[1, 1] = new Heart();
-    Symbols[2, 2] = new Heart();
-    Symbols[3, 3] = new Heart();
-    Symbols[4, 4] = new Heart();
-}
- 
-    // Sums payout and prints every matched hand.
-    private int ApplyResults(List<HandResult> hands)
+    var result = pool.ToArray();
+    PrintPool(result);
+    return result;
+	}
+	//private Symbol[] UpdateSymbolPool(){
+		
+		//return;
+	//}
+
+	private void PrintPool(Symbol[] pool)
+{
+    var counts = new Dictionary<SymbolType, int>();
+    foreach (var s in pool)
     {
+        if (!counts.ContainsKey(s.Type)) counts[s.Type] = 0;
+        counts[s.Type]++;
+    }
+
+    GD.Print($"=== Symbol Pool (total: {pool.Length}) ===");
+    foreach (var (type, count) in counts)
+        GD.Print($"  {type}: {count} ({(float)count / pool.Length * 100:F1}%)");
+}
+    private int ApplyResults(List<HandResult> hands){
         int total = 0;
         foreach (HandResult hand in hands)
         {
