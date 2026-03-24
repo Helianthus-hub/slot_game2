@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public static class GameConfig{
 //GridColumn amount
 public static readonly int GridColumns = 5;
+public static readonly int GridRows = 5;
 //starting symbol amount
 public static readonly int StartingPentagramAmount = 10;
 public static readonly int StartingCloverAmount = 10;
