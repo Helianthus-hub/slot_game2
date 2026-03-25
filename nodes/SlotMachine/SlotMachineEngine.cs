@@ -57,6 +57,24 @@ public partial class SlotMachineEngine : Node2D
         return total;
     }
 
+	//For debugging hand evaluations etc
+	private void FillHearts(){
+		string symbolPath = "res://sprites/heart.png";
+		Grid.Columns = GameConfig.GridColumns;
+		foreach(Node child in Grid.GetChildren()){
+			child.Free();//istrina is atminties kad duplicates nebutu
+		}
+		for(int row = 0; row < 5; row++){
+			for(int col = 0; col < 5; col++){
+				Symbols[row, col] = new Heart();
+				var textureRect = new TextureRect();
+				textureRect.Texture = GD.Load<Texture2D>(symbolPath);
+				GridSlots[row, col] = textureRect;
+				Grid.AddChild(textureRect);
+			}
+		}
+	}
+
 	private void AnimateMatchedCells(List<HandResult> hands){
     	foreach (HandResult hand in hands){
         	foreach (Vector2I cell in hand.Cells){

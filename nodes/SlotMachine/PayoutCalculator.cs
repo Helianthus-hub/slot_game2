@@ -1,8 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.RegularExpressions;
+
 public static class PayoutCalculator {
     
 	
@@ -63,8 +62,6 @@ public static class PayoutCalculator {
 		var LtoR = new Vector2I(1, 1);
 		var RtoL = new Vector2I(1,-1);
 
-		
-
 		//Cheking necessary top left to right diagonals 
 		foreach(var startPoint in StartPointsL){
 			int MatchLength = 0;
@@ -74,8 +71,6 @@ public static class PayoutCalculator {
 			next = Symbols[nextPos.X ,nextPos.Y];
 			
 			while(nextPos.X < 5 || nextPos.Y < 5){
-					
-			
 				if(head.Type == next.Type){
 					if(nextPos.X == 4 || nextPos.Y == 4){
 						MatchLength++;
@@ -84,7 +79,6 @@ public static class PayoutCalculator {
 					nextPos += LtoR;
 					next = Symbols[nextPos.X, nextPos.Y];
 					MatchLength++;
-				
 				}
 				else if(MatchLength == 1){
 					MatchLength = 0;
@@ -100,15 +94,11 @@ public static class PayoutCalculator {
 					nextPos = headPos + LtoR;
 					if(nextPos.X < 5 && nextPos.Y < 5){
 						head = Symbols[headPos.X, headPos.Y];
-						next = Symbols[nextPos.X, nextPos.Y];
-						
+						next = Symbols[nextPos.X, nextPos.Y];	
 					}
 					else break;
-				}
-				
-				
-			}
-			
+				}		
+			}	
 			if(MatchLength > 1){
 				(HandType type, int payout) = MatchLength switch {
 					4 => (HandType.DiagonalFive, GameConfig.FiveOfAKindPayout),
@@ -125,13 +115,10 @@ public static class PayoutCalculator {
 					MatchedSymbols.Add(next);
 					nextPos -= LtoR;
 				}
-				//Calculate HandType
-					
+				//Calculate HandType	
 				results.Add(new HandResult(type, payout, cells, MatchedSymbols));
-			}
-		
-		
-	} 
+			}	
+		} 
 		foreach(var startPoint in StartPointsR){
 			int MatchLength = 0;
 			headPos = startPoint;
@@ -166,11 +153,8 @@ public static class PayoutCalculator {
 						next = Symbols[nextPos.X, nextPos.Y];	
 					}
 					else break;
-				}
-				
-				
+				}	
 			}
-			
 			if(MatchLength > 1){
 				(HandType type, int payout) = MatchLength switch {
 					4 => (HandType.DiagonalFive, GameConfig.FiveOfAKindPayout),
@@ -186,13 +170,9 @@ public static class PayoutCalculator {
 					cells.Add(new Vector2I(nextPos.X,nextPos.Y));
 					MatchedSymbols.Add(next);
 					nextPos -= RtoL;
-				}
-				//Calculate HandType
-					
+				}	
 				results.Add(new HandResult(type, payout, cells, MatchedSymbols));
-			}
-		
-		
+			}	
 	} 
 		return results;
 	}
