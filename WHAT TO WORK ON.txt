@@ -1,7 +1,5 @@
 Implement ZigZag counting algorithm
 
-Implement Hand probabilities
-
 Implement Smybol Modifications and use them in evaluation functions
 
 Implement Symbol multi counting in PayoutCalculator
