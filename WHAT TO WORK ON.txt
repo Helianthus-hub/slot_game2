@@ -1,6 +1,10 @@
-First priority: Implement ZigZag counting algorithm
-Second Priority: Implement a Weighted Symbol Pool kuriame butu galima padidinti probabilities tam tikru
- simboliu appearing something like: P(Symbol appearing)= (SymbolInDeck.Count)/(AllSymbolsInDeck.Count) ir butu
-galima padidinti SymbolInDeck.Count += SymbolX.Weight
+Implement ZigZag counting algorithm
+
+Implement a Weighted Symbol Pool kuriame butu galima padidinti probabilities tam tikru
+simboliu appearing something like: P(Symbol appearing)= (SymbolInDeck.Count)/(AllSymbolsInDeck.Count) ir butu galima padidinti SymbolInDeck.Count += SymbolX.Weight
+
 Implement Hand probabilities
-Third Priority: Implement Smybol Modifications and use them in evaluation functions
+
+Implement Smybol Modifications and use them in evaluation functions
+
+Implement Symbol multi counting in PayoutCalculator
