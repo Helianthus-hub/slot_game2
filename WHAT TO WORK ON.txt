@@ -1,4 +1,5 @@
 First priority: Implement ZigZag counting algorithm
-Third Priority: Implement a Weighted Symbol Pool kuriame butu galima padidinti probabilities tam tikru
+Second Priority: Implement a Weighted Symbol Pool kuriame butu galima padidinti probabilities tam tikru
  simboliu appearing something like: P(Symbol appearing)= (SymbolInDeck.Count)/(AllSymbolsInDeck.Count) ir butu
 galima padidinti SymbolInDeck.Count += SymbolX.Weight
+Third Priority: Implement Smybol Modifications and use them in evaluation functions
