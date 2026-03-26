@@ -39,7 +39,7 @@ public partial class SlotMachineEngine : Node2D
 	}
 	public void Spin(){
 		SymbolPoolManager.UpdateSymbolPool(lists);
-		SymbolPoolManager.RandomizeSymbols(lists, Symbols);
+		HandDrawer.RandomizeSymbols(lists, Symbols, SymbolProbabilityManager.GetProbabilities());
         BuildGrid();
  
         List<HandResult> hands = PayoutCalculator.Evaluate(Symbols);

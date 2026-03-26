@@ -48,29 +48,4 @@ public static class SymbolPoolManager{
     public static void RemoveSymbolFromPool(List<Symbol> SymbolPool, Symbol symbol){
         SymbolPool.Remove(symbol);
     }
-
-    public static void ModifySymbolProbabilities(){
-        
-    }
-
-    
-    public static void RandomizeSymbols(SymbolPoolLists lists, Symbol[,] symbol){
-        if(lists.ActiveSymbolPool.Count == 0){
-            GD.PrintErr($" list is empty: {lists.ActiveSymbolPool.Count}");
-        }
-        var RandomizedSymbols = new List<Symbol>(lists.ActiveSymbolPool);
-        Random rng = new Random();
-        for(int i = RandomizedSymbols.Count - 1; i > 0; i--){
-            int j = rng.Next(0, i - 1);
-            (RandomizedSymbols[i], RandomizedSymbols[j]) = (RandomizedSymbols[j], RandomizedSymbols[i]);
-        }
-        int SymbolIndex = 0;
-        for(int rows = 0; rows < GameConfig.GridRows; rows++){
-            for(int col = 0; col < GameConfig.GridColumns; col++){
-                symbol[rows, col] = RandomizedSymbols[SymbolIndex];
-                SymbolIndex++;
-            }
-        }
-			
-	}
 }
