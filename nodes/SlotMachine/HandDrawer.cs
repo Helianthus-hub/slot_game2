@@ -16,6 +16,7 @@ public static class HandDrawer{
 				break;
 			}
 		}
+		
 		//atrusiuojam candidates for the Draw pagal tipa is active symbol pool ir sudedam i lista
 		List<Symbol> symbolCandidates = lists.ActiveSymbolPool.Where(symbol => symbol.Type == rolledType && symbol.InDeck).ToList();
 

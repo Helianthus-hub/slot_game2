@@ -1,7 +1,6 @@
+
 //Cia rasom visus Final timpo variables kad galetume
 //naudoti savo programoje ir reusinti keisti tik sitoje vietoje
-using System.Collections.Generic;
-
 public static class GameConfig{
 //GridColumn amount
 public static readonly int GridColumns = 5;
@@ -16,22 +15,7 @@ public static readonly int StartingHeartAmount = 10;
 public static int ThreeOfAKindPayout = 100;
 public static int FourOfAKindPayout = 200;
 public static int FiveOfAKindPayout = 300;
-public static int PyramidPayout = 500;
-public static int FullHousePayout = 1000;
+public static int PyramidPayout = FiveOfAKindPayout * 2;
+public static int FullHousePayout = FiveOfAKindPayout * 4;
 
-//Hand Probabilities will have to implement later
-public static Dictionary<HandType, float> HandProbabilities = new (){
-		{HandType.HorizontalThree, 0.1f},
-		{HandType.HorizontalFour, 0.1f},
-		{HandType.HorizontalFive, 0.1f},
-		{HandType.DiagonalThree, 0.1f},
-		{HandType.DiagonalFour, 0.1f},
-		{HandType.DiagonalFive, 0.1f},
-		{HandType.ZigzagThree, 0.1f},
-		{HandType.ZigzagFour, 0.1f},
-		{HandType.ZigzagFive, 0.1f},
-		{HandType.PyramidUpper, 0.1f},
-		{HandType.PyramidLower, 0.1f},
-		{HandType.FullHouse, 0.1f}
-	};
 }

@@ -3,16 +3,12 @@ using System;
 using System.Collections.Generic;
 
 public static class PayoutCalculator {
-    
-	
-	
-	// FullHouse
 	//ZigZag
-	//Triangle
 	public static List<HandResult> Evaluate(Symbol[,] Symbols){
         var results = new List<HandResult>();
 		results.AddRange(EvaluateHorizontal(Symbols));
 		results.AddRange(EvaluatePyramid(Symbols));
+		results.AddRange(EvaluateFullHouse(Symbols));
 		results.AddRange(EvaluateDiagonal(Symbols));
 		return results;
 	}

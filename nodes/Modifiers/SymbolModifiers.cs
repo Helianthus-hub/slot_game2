@@ -1,5 +1,7 @@
 using Godot;
 using System;
 
-public partial class SymbolModifiers : Node{
+public abstract class SymbolModifiers{
+    public abstract string Name {get;}
+    //Implementuoti metodus kaip OnMatched() etc
 }
