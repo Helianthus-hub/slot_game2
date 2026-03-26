@@ -82,7 +82,7 @@ public partial class SlotMachineEngine : Node2D
             Tween tween = CreateTween();
             tween.SetLoops(3);
             tween.TweenProperty(slot, "modulate", new Color(1.5f, 1.5f, 0.5f), 0.1f); // flash yellow
-            tween.TweenProperty(slot, "modulate", new Color(1, 1, 1), 0.1f);           // back to normal
+            // tween.TweenProperty(slot, "modulate", new Color(1, 1, 1), 0.1f);           // back to normal
     		}
    	   }
 	}

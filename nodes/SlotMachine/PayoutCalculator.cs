@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
+using System.Numerics;
 
 public static class PayoutCalculator {
     
@@ -11,9 +13,10 @@ public static class PayoutCalculator {
 	//Triangle
 	public static List<HandResult> Evaluate(Symbol[,] Symbols){
         var results = new List<HandResult>();
-		results.AddRange(EvaluateHorizontal(Symbols));
-		results.AddRange(EvaluatePyramid(Symbols));
-		results.AddRange(EvaluateDiagonal(Symbols));
+		// results.AddRange(EvaluateHorizontal(Symbols));
+		// results.AddRange(EvaluatePyramid(Symbols));
+		// results.AddRange(EvaluateDiagonal(Symbols));
+		results.AddRange(EvaluateZigZag(Symbols));
 		return results;
 	}
 	// Horizontal
@@ -114,6 +117,7 @@ public static class PayoutCalculator {
 					cells.Add(new Vector2I(nextPos.X,nextPos.Y));
 					MatchedSymbols.Add(next);
 					nextPos -= LtoR;
+					next = Symbols[nextPos.X, nextPos.Y];
 				}
 				//Calculate HandType	
 				results.Add(new HandResult(type, payout, cells, MatchedSymbols));
@@ -176,7 +180,55 @@ public static class PayoutCalculator {
 	} 
 		return results;
 	}
+	public static List<HandResult> EvaluateZigZag(Symbol[,] Symbols) {
+		var results = new List<HandResult>();
 
+		for (int startRow = 0; startRow < 5; startRow++) {
+			foreach (bool startDown in new[] { true, false }) {
+				var path = BuildZigzagPath(startRow, startDown);
+				if (path.Count < 3) continue;
+
+				int headIdx = 0;
+				while (headIdx < path.Count) {
+					int nextIdx = headIdx + 1;
+					while (nextIdx < path.Count &&
+						   Symbols[path[nextIdx].X, path[nextIdx].Y].Type == Symbols[path[headIdx].X, path[headIdx].Y].Type) {
+						nextIdx++;
+					}
+					int runLength = nextIdx - headIdx;
+					if (runLength >= 3) {
+						var cells = new List<Vector2I>();
+						var matchedSymbols = new List<Symbol>();
+						for (int k = headIdx; k < nextIdx; k++) {
+							cells.Add(path[k]);
+							matchedSymbols.Add(Symbols[path[k].X, path[k].Y]);
+						}
+						(HandType type, int payout) = runLength switch {
+							>= 5 => (HandType.ZigzagFive,  GameConfig.FiveOfAKindPayout),
+							4    => (HandType.ZigzagFour,   GameConfig.FourOfAKindPayout),
+							_    => (HandType.ZigzagThree,  GameConfig.ThreeOfAKindPayout),
+						};
+						results.Add(new HandResult(type, payout, cells, matchedSymbols));
+					}
+					headIdx = nextIdx;
+				}
+			}
+		}
+		return results;
+	}
+
+	private static List<Vector2I> BuildZigzagPath(int startRow, bool startDown) {
+		var path = new List<Vector2I>();
+		int row = startRow;
+		bool goingDown = startDown;
+		for (int col = 0; col < 5; col++) {
+			if (row < 0 || row >= 5) break;
+			path.Add(new Vector2I(row, col));
+			row += goingDown ? 1 : -1;
+			goingDown = !goingDown;
+		}
+		return path;
+	}
 	//Pyramid
 	public static List<HandResult> EvaluatePyramid(Symbol[,] Symbols){
 		var results = new List<HandResult>();
