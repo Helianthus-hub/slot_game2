@@ -1,13 +1,15 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Linq;
 
-public partial class SlotMachineEngine : Node2D
-{
+public partial class SlotMachineEngine : Node2D{
+	[Signal]
+	public delegate void SpinCompletedEventHandler(int payout, int chips, float multi);
+	[Signal]
+	public delegate void HandResolvedEventHandler(int type, int payout, int chips, float multi);
 	private TextureRect[,] GridSlots = new TextureRect[5, 5];
 	private Symbol[,] Symbols = new Symbol[5, 5];
-
 	SymbolPoolLists lists;
 		
 	[Export] private GridContainer Grid;
@@ -37,24 +39,39 @@ public partial class SlotMachineEngine : Node2D
 	public void UpdateGrid(int row, int col, Symbol symbol){
 		GridSlots[row, col].Texture = GD.Load<Texture2D>(symbol.ImagePath);
 	}
-	public void Spin(){
-		SymbolPoolManager.UpdateSymbolPool(lists);
-		HandDrawer.RandomizeSymbols(lists, Symbols, SymbolProbabilityManager.GetProbabilities());
-        BuildGrid();
- 
-        List<HandResult> hands = PayoutCalculator.Evaluate(Symbols);
-        int totalPayout = ApplyResults(hands);
-		AnimateMatchedCells(hands);
-        GD.Print($"Total payout: {totalPayout}");
+	public async void Spin(){
+    SymbolPoolManager.UpdateSymbolPool(lists);
+    HandDrawer.RandomizeSymbols(lists, Symbols, SymbolProbabilityManager.GetProbabilities());
+    BuildGrid();
+
+    List<HandResult> hands = PayoutCalculator.Evaluate(Symbols);
+    int totalPayout = 0;
+
+    foreach (HandResult hand in hands){
+        int chips = hand.MatchedSymbols.Sum(s => s.BaseChips) + hand.BaseBonus;
+        float multi = hand.MatchedSymbols.Aggregate(1.0f, (acc, s) => acc * s.Multi);
+        int payout = hand.CalculatePayout();
+        totalPayout += payout;
+
+        AnimateMatchedCells(hand);
+        EmitSignal(SignalName.HandResolved, (int)hand.Type, payout, chips, multi);
+
+        await ToSignal(GetTree().CreateTimer(3.0f), SceneTreeTimer.SignalName.Timeout);
     }
-    private int ApplyResults(List<HandResult> hands){
-        int total = 0;
-        foreach (HandResult hand in hands)
-        {
-            total += hand.Payout;
-            GD.Print($"{hand.Type} +{hand.Payout}  cells: {string.Join(", ", hand.Cells)}");
+
+    EmitSignal(SignalName.SpinCompleted, totalPayout, 0, 0f); // total at the end
+}
+    private (int payout, int chips, float multi) ApplyResults(List<HandResult> hands){
+        int totalPayout = 0;
+    	int totalChips = 0;
+   	 	float totalMulti = 1.0f;
+        foreach (HandResult hand in hands){
+			totalPayout += hand.CalculatePayout();
+            totalChips += hand.MatchedSymbols.Sum(s => s.BaseChips) + hand.BaseBonus;
+        	totalMulti *= hand.MatchedSymbols.Aggregate(1.0f, (acc, s) => acc * s.Multi);
+            GD.Print($"{hand.Type} → {hand.MatchedSymbols.Sum(symbol => symbol.BaseChips) + hand.BaseBonus} chips × {hand.MatchedSymbols.Aggregate(1.0f, (acc, s) => acc * s.Multi):F2} multi = {totalPayout}");
         }
-        return total;
+        return (totalPayout, totalChips, totalMulti);
     }
 
 	//For debugging hand evaluations etc
@@ -67,23 +84,20 @@ public partial class SlotMachineEngine : Node2D
 		for(int row = 0; row < 5; row++){
 			for(int col = 0; col < 5; col++){
 				Symbols[row, col] = new Heart();
-				var textureRect = new TextureRect();
-				textureRect.Texture = GD.Load<Texture2D>(symbolPath);
-				GridSlots[row, col] = textureRect;
+                var textureRect = new TextureRect{Texture = GD.Load<Texture2D>(symbolPath)};
+                GridSlots[row, col] = textureRect;
 				Grid.AddChild(textureRect);
 			}
 		}
 	}
 
-	private void AnimateMatchedCells(List<HandResult> hands){
-    	foreach (HandResult hand in hands){
-        	foreach (Vector2I cell in hand.Cells){
-            TextureRect slot = GridSlots[cell.X, cell.Y];
-            Tween tween = CreateTween();
-            tween.SetLoops(3);
-            tween.TweenProperty(slot, "modulate", new Color(1.5f, 1.5f, 0.5f), 0.1f); // flash yellow
-            // tween.TweenProperty(slot, "modulate", new Color(1, 1, 1), 0.1f);           // back to normal
-    		}
-   	   }
+	private void AnimateMatchedCells(HandResult hand) {
+    foreach (Vector2I cell in hand.Cells) {
+        TextureRect slot = GridSlots[cell.X, cell.Y];
+        Tween tween = CreateTween();
+        tween.SetLoops(3);
+        tween.TweenProperty(slot, "modulate", new Color(1.5f, 1.5f, 0.5f), 0.1f);
+        tween.TweenProperty(slot, "modulate", Colors.White, 0.1f);
+    	}
 	}
 }

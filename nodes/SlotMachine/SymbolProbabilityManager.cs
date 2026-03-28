@@ -15,7 +15,7 @@ public static class SymbolProbabilityManager{
     }
 
     public static void ModifySymbolProbabilities(SymbolType type, float targetProbability){
-        if(targetProbability < 0 && targetProbability > 1){
+        if(targetProbability < 0 || targetProbability > 1){
             GD.PrintErr("Impossible probability: {targetProbability}");
         }
         float probabilitySum = 0.0f;

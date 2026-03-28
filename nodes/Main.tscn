@@ -10,19 +10,49 @@ script = ExtResource("1_xivh3")
 Grid = NodePath("GridContainer")
 
 [node name="GridContainer" type="GridContainer" parent="SlotMachineEngine" unique_id=247996332]
-offset_left = 2.0
-offset_right = 42.0
-offset_bottom = 40.0
-columns = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 426.0
+offset_top = 233.0
+offset_right = 426.0
+offset_bottom = 233.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(100, 100)
+size_flags_horizontal = 4
+columns = 5
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1374389175 node_paths=PackedStringArray("SpinButton", "Engine")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1374389175 node_paths=PackedStringArray("SpinButton", "Engine", "HUD")]
 script = ExtResource("2_ldt21")
 SpinButton = NodePath("SpinButton")
 Engine = NodePath("../SlotMachineEngine")
+HUD = NodePath("HUD")
 
 [node name="SpinButton" type="Button" parent="UI" unique_id=413619395]
-offset_left = 400.0
-offset_top = 121.0
-offset_right = 480.0
-offset_bottom = 174.0
+offset_left = 990.0
+offset_top = 289.0
+offset_right = 1070.0
+offset_bottom = 342.0
 text = "SPIN"
+
+[node name="HUD" type="VBoxContainer" parent="UI" unique_id=807100536]
+offset_left = 974.0
+offset_top = 69.0
+offset_right = 1055.0
+offset_bottom = 109.0
+
+[node name="PayoutLabel" type="Label" parent="UI/HUD" unique_id=1443463330]
+layout_mode = 2
+text = "Payout: $0"
+
+[node name="ChipsLabel" type="Label" parent="UI/HUD" unique_id=1869797635]
+layout_mode = 2
+
+[node name="MultiLabel" type="Label" parent="UI/HUD" unique_id=923961771]
+layout_mode = 2
+
+[node name="HandLabel" type="Label" parent="UI/HUD" unique_id=382444570]
+layout_mode = 2
