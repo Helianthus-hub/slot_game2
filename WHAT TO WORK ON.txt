@@ -1,4 +1,8 @@
 
 Implement Smybol Modifications and use them in evaluation functions
 
-Implement Symbol multi counting in PayoutCalculator
+Implement a floor system with increasing difficulty
+
+implement more modifiers
+implement a relic system
+implement card placing system
