@@ -1,4 +1,3 @@
-Implement ZigZag counting algorithm
 
 Implement Smybol Modifications and use them in evaluation functions
 
